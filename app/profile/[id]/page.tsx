@@ -26,7 +26,9 @@ export default async function ProfilePage(props: Props) {
 
   if (!user) return notFound();
 
-  const posts = await Post.find({ author: user._id }).sort({ createdAt: -1 }).lean();
+  const posts = await Post.find({ author: user._id })
+  .sort({ createdAt: -1 })
+  .lean<{ _id: Types.ObjectId; content: string; createdAt: Date }>();
 
   return (
     <div className="max-w-2xl p-4 mx-auto mt-20">
