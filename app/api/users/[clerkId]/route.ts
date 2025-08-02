@@ -3,10 +3,12 @@ import { dbConnect } from '../../../../lib/db';
 import { User, IntUser } from '../../../../models/User';
 import { Post } from '../../../../models/Post';
 
-export async function GET(req: Request, { params }: { params: { clerkId: string } }) {
+export async function GET(req: Request, context: { params: { clerkId: string } }) {
+  const { clerkId } = context.params;
+
   await dbConnect();
 
-  const user = await User.findOne({ clerkId: params.clerkId }).lean<IntUser>();
+  const user = await User.findOne({ clerkId }).lean<IntUser>();
 
   if (!user) {
     return new NextResponse('User not found', { status: 404 });
