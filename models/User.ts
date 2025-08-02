@@ -1,6 +1,7 @@
-import mongoose, { Schema, Document, models, model } from 'mongoose';
+import mongoose, { Schema, Document, models, model, Types } from 'mongoose';
 
 export interface IntUser extends Document {
+  _id: Types.ObjectId;
   clerkId: string;
   name: string;
   email: string;
