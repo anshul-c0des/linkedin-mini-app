@@ -1,10 +1,11 @@
 import React from 'react'; // import React for React.use
 import { dbConnect } from '@/lib/db';
-import { User } from '@/models/User';
+import { IntUser, User } from '@/models/User';
 import { Post } from '@/models/Post';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
+import { Types } from 'mongoose';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -21,7 +22,7 @@ export default async function ProfilePage(props: Props) {
   const currentUserId = session.userId;
   const isOwnProfile = currentUserId === userId;
 
-  const user = await User.findOne({ clerkId: userId }).lean();
+  const user = await User.findOne({ clerkId: userId }).lean<IntUser & { _id: Types.ObjectId }>();
 
   if (!user) return notFound();
 
