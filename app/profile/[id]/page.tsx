@@ -28,18 +28,18 @@ export default async function ProfilePage(props: Props) {
   const posts = await Post.find({ author: user._id }).sort({ createdAt: -1 }).lean();
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="max-w-2xl p-4 mx-auto">
       <h1 className="text-2xl font-bold">{user.name}</h1>
       <p className="text-sm text-gray-500">{user.email}</p>
 
       {/* Bio section */}
       <div className="mt-4">
-        <h2 className="font-semibold">Bio</h2>
+        <h2 className="font-semibold">Bio...</h2>
         {user.bio ? <p className="mt-1">{user.bio}</p> : <p className="text-gray-400">No bio yet.</p>}
         {isOwnProfile && (
           <Link
             href={`/profile/${userId}/edit`}
-            className="text-blue-600 hover:underline text-sm mt-2 inline-block"
+            className="inline-block mt-2 text-sm text-blue-600 hover:underline"
           >
             Edit Bio
           </Link>
@@ -48,12 +48,12 @@ export default async function ProfilePage(props: Props) {
 
       <hr className="my-4" />
 
-      <h2 className="text-xl font-semibold mb-2">Posts</h2>
+      <h2 className="mb-2 text-xl font-semibold">Posts</h2>
       {posts.length === 0 ? (
-        <p>No posts yet.</p>
+        <p className="mt-4 italic text-gray-500">Nothing to show here yet.</p>
       ) : (
         posts.map((post) => (
-          <div key={post._id.toString()} className="border p-3 rounded mb-3">
+          <div key={post._id.toString()} className="p-3 mb-3 bg-white border rounded">
             <p>{post.content}</p>
             <p className="text-xs text-gray-400">{new Date(post.createdAt).toLocaleString()}</p>
           </div>

@@ -65,29 +65,16 @@ export default function HomePage() {
   };
 
   return (
-    <main className="max-w-3xl min-h-screen p-4 mx-auto rounded-lg sm:p-6 bg-linkedinLightBg">
+    <main className="max-w-3xl min-h-screen p-4 mx-auto rounded-lg sm:p-6 bg-#f3f6f8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-4xl font-extrabold text-linkedinBlue">📝Community Feed</h1>
-        {isSignedIn ? (
-          <SignOutButton>
-            <button className="px-4 py-2 text-black transition bg-white border border-red-600 rounded cursor-pointer hover:bg-red-100">
-              Sign out
-            </button> 
-          </SignOutButton>
-        ) : (
-          <SignInButton>
-            <button className="px-4 py-2 transition border border-blue-600 rounded cursor-pointer text-linkedinDarkBlue hover:bg-linkedinDarkBlue hover:text-white">
-              Sign in
-            </button>
-          </SignInButton>
-        )}
       </div>
 
 
       {isSignedIn && (
         <form onSubmit={handleSubmit} className="mb-8">
           <textarea
-            className="w-full p-3 text-base border rounded resize-none sm:text-lg"
+            className="w-full p-3 text-base bg-white border rounded resize-none sm:text-lg"
             rows={3}
             placeholder="What do you want to share?"
             value={content}
@@ -111,9 +98,9 @@ export default function HomePage() {
     ) : posts.length === 0 ? (
         <p className="text-gray-500">No posts yet.</p>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {posts.map((post) => (
-            <div key={post._id.toString()} className="p-4 bg-white border border-gray-200 rounded shadow sm:p-6">
+            <div key={post._id.toString()} className="p-4 transition duration-300 ease-in-out bg-white border rounded shadow-sm hover:shadow-md">
               <div className="flex flex-col justify-between mb-2 text-sm text-gray-500 sm:flex-row sm:items-center">
                 <Link href={`/profile/${post.author.clerkId}`} className="font-semibold text-blue-600 hover:underline">
                   {post.author.name}
