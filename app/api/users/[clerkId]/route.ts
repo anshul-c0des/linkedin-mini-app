@@ -3,7 +3,7 @@ import { dbConnect } from '../../../../lib/db';
 import { User, IntUser } from '../../../../models/User';
 import { Post } from '../../../../models/Post';
 
-export async function GET(req: Request, context: { params: { clerkId: string } }) {
+export async function GET(req: Request, context: any) {
   const { clerkId } = context.params;
 
   await dbConnect();
