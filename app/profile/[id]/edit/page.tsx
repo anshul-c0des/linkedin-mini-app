@@ -1,28 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
-export default function EditBio({ params }: { params: { id: string } }) {
+export default function EditBio() {
   const [bio, setBio] = useState('');
   const router = useRouter();
+  const params = useParams(); // ← Get dynamic route params
+  const id = params.id as string;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch(`/api/profile/${params.id}/bio`, {
+    const res = await fetch(`/api/profile/${id}/bio`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ bio }),
     });
-
+    
+    const data = await res.text();
+    console.log('Response status:', res.status);
+    console.log('Response body:', data);
+    
     if (res.ok) {
-      router.push(`/profile/${params.id}`);
+      router.push(`/profile/${id}`);
     } else {
       alert('Failed to update bio.');
     }
+    
   };
 
   return (
