@@ -1,8 +1,11 @@
 import './globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import Navbar from '@/components/Navbar';
+import { auth, clerkClient } from '@clerk/nextjs/server';
+import { dbConnect } from '@/lib/db';
+import { User } from '@/models/User';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,20 +14,41 @@ export const metadata = {
   description: 'A mini LinkedIn-like platform',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();  // get current session from clerk
+  const userId = session.userId;
+
+
+  if (userId) {
+    await dbConnect();
+
+    const existingUser = await User.findOne({ clerkId: userId });
+
+    if (!existingUser) {  // if user does not exist, the create a new one
+      const client = await clerkClient();
+      const user = await client.users.getUser(userId);
+
+      await User.create({
+        clerkId: userId,
+        name: user.firstName || 'User',
+        email: user.emailAddresses[0]?.emailAddress || '',
+      });
+    }
+  }
+
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-            <Navbar />
-            {children}
-            <Toaster position="top-right" reverseOrder={false} />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <ClerkProvider>
+          <Navbar />
+          {children}
+          <Toaster position="top-right" reverseOrder={false} />
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
