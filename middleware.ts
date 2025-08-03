@@ -1,14 +1,13 @@
-// middleware.ts
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-const isProtectedRoute = createRouteMatcher([
+const isProtectedRoute = createRouteMatcher([  //specifying routes requiring authentication
   '/dashboard(.*)', 
   '/api/posts(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) {
-    auth.protect(); // ✅ Corrected: Call protect() directly on the 'auth' object
+  if (isProtectedRoute(req)) { 
+    auth.protect();    // forces auth on specified routes
   }
 });
 

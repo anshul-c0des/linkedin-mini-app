@@ -8,13 +8,13 @@ export async function GET(req: Request, context: any) {
 
   await dbConnect();
 
-  const user = await User.findOne({ clerkId }).lean<IntUser>();
+  const user = await User.findOne({ clerkId }).lean<IntUser>();  // finds the user with matching clerkId
 
   if (!user) {
     return new NextResponse('User not found', { status: 404 });
   }
 
-  const posts = await Post.find({ author: user._id })
+  const posts = await Post.find({ author: user._id })  // finds all posts by teh user
     .sort({ createdAt: -1 })
     .lean();
 

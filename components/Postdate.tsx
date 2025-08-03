@@ -2,7 +2,7 @@
 
 import { formatDistanceToNow, format } from 'date-fns';
 
-function toUTC(date: Date) {
+function toUTC(date: Date) {   // to enforce UTC based date/time
   return new Date(Date.UTC(
     date.getUTCFullYear(),
     date.getUTCMonth(),
@@ -13,7 +13,7 @@ function toUTC(date: Date) {
   ));
 }
 
-export default function PostDate({ dateString }: { dateString: string }) {
+export default function PostDate({ dateString }: { dateString: string }) {  // receives date string, and converts it into normalized UTC date
   const date = toUTC(new Date(dateString));
 
   return (

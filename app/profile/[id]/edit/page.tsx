@@ -5,8 +5,8 @@ import { useRouter, useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 export default function EditBio() {
-  const [bio, setBio] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [bio, setBio] = useState('');  // holds the current bio
+  const [loading, setLoading] = useState(false);  // submission process
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;

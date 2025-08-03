@@ -8,16 +8,15 @@ export async function GET(req: NextRequest) {
   try {
     await dbConnect();
 
-    const posts = await Post.find({})
-      .populate({
+    const posts = await Post.find({})    // retrieves all posts from Posts collection
+      .populate({   // replace author field with actual user data
         path: 'author',
         select: 'name clerkId',
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 });  // sort newest first
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
-    console.error('❌ GET /api/posts error:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
@@ -38,13 +37,12 @@ export async function POST(req: NextRequest) {
 
     await dbConnect();
 
-    // ✅ Get full user data from Clerk
-    const client = await clerkClient();
+    const client = await clerkClient();   // fetch user
     const clerkUser = await client.users.getUser(userId);
     const name = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') || clerkUser.username || 'User';
     const email = clerkUser.emailAddresses[0]?.emailAddress || null;
 
-    const dbUser = await User.findOneAndUpdate(
+    const dbUser = await User.findOneAndUpdate(   //  finds this user in the mongo database
       { clerkId: userId },
       {
         name,
@@ -53,14 +51,13 @@ export async function POST(req: NextRequest) {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    const post = await Post.create({
+    const post = await Post.create({  // creates a new post and link it to user
       author: dbUser._id,
       content,
     });
 
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
-    console.error('❌ POST /api/posts error:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }

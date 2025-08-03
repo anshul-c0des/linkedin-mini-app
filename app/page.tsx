@@ -21,14 +21,14 @@ interface Post {
 }
 
 export default function HomePage() {
-  const { isSignedIn, user } = useUser();
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [content, setContent] = useState('');
-  const [posting, setPosting] = useState(false);
-  const [error, setError] = useState('');
-
-  const fetchPosts = async () => {
+  const { isSignedIn, user } = useUser();  // authentication status from clerk
+  const [posts, setPosts] = useState<Post[]>([]);  // stores list of posts fetched from backend
+  const [loading, setLoading] = useState(true);  // loading status, showing loading spinner
+  const [content, setContent] = useState('');  // stores content of new post textarea
+  const [posting, setPosting] = useState(false);  // post submission
+  const [error, setError] = useState('');  // fetches errors
+ 
+  const fetchPosts = async () => {   // fetches posts from backend
     try {
       const res = await axios.get('/api/posts');
       setPosts(res.data);
@@ -41,11 +41,11 @@ export default function HomePage() {
   };
   
 
-  useEffect(() => {
+  useEffect(() => {  // load initial posts
     fetchPosts();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {  // form submission of new post
     e.preventDefault();
     if (!content.trim()){
       toast.error('Post content cannot be empty!');

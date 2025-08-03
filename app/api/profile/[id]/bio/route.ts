@@ -1,12 +1,10 @@
-// app/api/profile/[id]/bio/route.ts
-
 import { dbConnect } from '@/lib/db';
 import { User } from '@/models/User';
 import { getAuth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(req: NextRequest, context: any) {
-  const { id } = context.params;
+  const { id } = context.params;  // extracts id from URL
   const { userId } = getAuth(req);
 
   if (userId !== id) {

@@ -1,4 +1,4 @@
-import React from 'react'; // import React for React.use
+import React from 'react';
 import { dbConnect } from '@/lib/db';
 import { IntUser, User } from '@/models/User';
 import { Post } from '@/models/Post';
@@ -12,15 +12,14 @@ interface Props {
 }
 
 export default async function ProfilePage(props: Props) {
-  // unwrap params with React.use
-  const params = await props.params;  // await directly
+  const params = await props.params;  // from dynamic route (URL)
   const userId = params.id;
 
   await dbConnect();
 
   const session = await auth();
   const currentUserId = session.userId;
-  const isOwnProfile = currentUserId === userId;
+  const isOwnProfile = currentUserId === userId;  // checks if the logged in user is viewing their own profile
 
   const user = await User.findOne({ clerkId: userId }).lean<IntUser & { _id: Types.ObjectId }>();
 
@@ -43,7 +42,7 @@ export default async function ProfilePage(props: Props) {
       <div className="mt-4">
         <h2 className="font-semibold text-2xl text-blue-400">Bio..</h2>
         {user.bio ? <p className="mt-1">{user.bio}</p> : <p className="text-gray-400">No bio yet.</p>}
-        {isOwnProfile && (
+        {isOwnProfile && (   // shows edit bio option only if it is current user's profile
           <Link
             href={`/profile/${userId}/edit`}
             className="inline-block mt-2 text-sm text-orange-400 hover:underline"

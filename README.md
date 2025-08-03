@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LinkedIn Mini
 
-## Getting Started
+A mini LinkedIn-like platform built with **Next.js**, **Clerk** for authentication, **Tailwind CSS** for styling, and **MongoDB** for data storage.
 
-First, run the development server:
+It features user authentication, posting, community feeds, profile pages, toasts, and a responsive UI inspired by LinkedIn.
+
+---
+
+## 🚀 Tech Stack
+
+- **Next.js** (App Router, React 18+)
+- **Clerk** (User Authentication)
+- **MongoDB** (Database)
+- **Tailwind CSS** (Utility-first CSS framework)
+- **Axios** (API requests)
+- **React Hot Toast** (Notifications)
+- **date-fns** (Date & time formatting with Indian Standard Time support)
+- **Vercel** (Deployment)
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- A [Clerk](https://clerk.dev) account (for authentication keys)
+
+---
+
+### Installation
+
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/yourusername/linkedin-mini.git
+cd linkedin-mini
+```
+
+2. **Install dependencies:**
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. **Setup environment variables:**
+
+```bash
+Create a .env.local file at the root with your Clerk credentials:
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+MONGODB_URI=your_mongodb_uri
+```
+
+4. **Run the development server:**
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Demo / Admin User Logins
 
-## Learn More
+- This app uses Clerk for authentication.
+- No predefined demo or admin users are included.
+- Simply sign up through the app to create your account.
+- (If needed, a development account can be shared, but the name will appear as “user” only.)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ✅ Responsive design with mobile-first navbar (hamburger menu)
+- ✅ Feed with post creation and real-time loading spinners
+- ✅ Profile pages with editable bio
+- ✅ Accurate timestamps (relative & formatted)
+- ✅ Toast notifications for success & errors
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔗 Live Demo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Click here to view the deployed app](https://linkedin-mini-e85t0x4t3-anshuls-projects-ad041669.vercel.app/)
+
+You can sign up or sign in with your email to explore the platform.
+
+---
